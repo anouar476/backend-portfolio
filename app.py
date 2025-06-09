@@ -12,7 +12,14 @@ from langchain.text_splitter import CharacterTextSplitter
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+# Configure CORS to allow requests from the frontend domain
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["https://moudad-sec.vercel.app"],
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
 
 # Initialize global variables
 qa_chain = None
